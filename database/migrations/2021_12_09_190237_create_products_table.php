@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->string('image');
             $table->date('expirat_date');
             $table->foreignId("category_id");
+            $table->string("information_comm");
             $table->integer("quentity");
             $table->float("price");
             $table->timestamps();
