@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\LikeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,10 +18,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::resource('/categories',CategoryController::class);
+Route::resource('/products',ProductController::class);
+Route::resource('/likes',LikeController::class);
+Route::group(['middleware' => 'auth:sanctum'], function ()
+ {
+Route::post('/logout', [AuthController::class, 'logout']);});
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/sorting', [ProductController::class, 'sort']);
+Route::post('/search', [ProductController::class, 'search']);
+Route::post('/comment/{id}', [ProductController::class, 'comment']);
+Route::get('/showComment/{id}', [ProductController::class, 'showComment']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    /* return $request->user(); */
-    return "dd";
+     return $request->user();
 });
-Route::get('ll', function () {
-    return "ff";
-});
+
